@@ -1,13 +1,16 @@
-# 浅谈@media响应式布局
+# 浅谈媒体查询（Media Queries） 响应式布局
+
+>demo 为媒体查询实现的简单响应式布局，可以给大家提供一个参考，欢迎下载，如果觉得不错的话，可以点击`stars`。
+
+
+
 # 1. 前言
 
+  随着移动终端设备的发展，移动web开发的需求也越来越多，移动产品的屏幕规格也多样化，这对于前端开发的同志们来说是非常打脑壳的，我们不得不去为了提升用户体验而做屏幕适配。目前主流的适配方法便是使用 `bootstrap` 响应式布局，这里我们只是浅谈如何使用媒体查询 `@media` 的方式进行响应式布局。
 
+# 2. 媒体查询 Media Queries
 
-闲暇之余，浅谈@media媒体查询实现响应式布局。随着移动设备的发展，移动web开发的需求也越来越多，移动产品的屏幕规格也多样化，这对于前端开发的同志们来说是非常打脑壳的，我们不得不去为了提升用户体验而做屏幕适配。
-
-# 2. CSS3 多媒体查询
-
-CSS3 的多媒体查询继承了 CSS2 多媒体类型的所有思想： 取代了查找设备的类型，CSS3 根据设置自适应显示。媒体查询可用于检测很多事情，例如：
+  CSS3 的多媒体查询继承了 CSS2 多媒体类型的所有思想： 取代了查找设备的类型，CSS3 根据设置自适应显示。媒体查询可用于检测很多事情，例如：
 
 - viewport（视窗）的宽度与高度
 - 设备的宽度与高度
@@ -22,45 +25,43 @@ CSS3 的多媒体查询继承了 CSS2 多媒体类型的所有思想： 取代�
 
 > 代码原意翻译过来既是： 视窗的宽度等于设备宽度，原始比例始终为 1:1 。这样在改变 device-width 的时候任意变化修改都能自适应了。
 
-# 4. 多媒体查询语法
+# 4. 媒体查询语法
 
 - 多媒体查询由多种媒体组成，可以包含一个或多个表达式，表达式根据条件是否成立返回 `true` 或 `false` 。
 - 如果指定的多媒体类型匹配设备类型则查询结果返回 true，文档会在匹配的设备上显示指定样式效果。
 - 除非你使用了`not`或`only`操作符，否则所有的样式会适应在所有设备上显示效果。
 
-## I. 判断媒体类型，引用不同的样式表
+## a. 判断媒体类型，引用不同的样式表
 
 
 
 ```html
-<link rel="stylesheet" media="mediatype and|not|only (media feature)" href="styles.css">
+<link rel="stylesheet" media="mediaType and|not|only (media feature)" href="styles.css">
 ```
 
 > 通过设定屏幕的判断条件，调用对应的css文件，该实例多用于页面不同风格的css调用与选取，使用该方法可能需要为一个页面制作多个css文件。
 
 
 
-## II. 判断媒体类型，执行不同的css样式属性
+## b. 判断媒体类型，执行不同的css样式属性
 
 ```css
-@media media type and|not|only (media feature) {
+@media mediaType and|not|only (media feature) {
       /* css code... */
 }
 ```
 
-> 上述实例可以出现在外部样式表与内部样式表中。`mediatype`指定媒体类型，`mediafeature`指定判断条件。
+> 上述实例可以出现在外部样式表与内部样式表中。`mediaType`指定媒体类型，`mediaFeature`指定判断条件。
 
-## III. not/only/all
+## c. not/only/all
 
-| 类型   | 描述                                      |
-| ---- | --------------------------------------- |
-| not  | 排除掉某些特定设备的，比如`@media not print`表示非打印设备; |
-| only | 指定某种特别的媒体类型;                            |
-| all  | all：所有设备;                               |
+| 类型   | 描述                                       |
+| ---- | ---------------------------------------- |
+| not  | 排除某种指定的媒体类型，换句话来说就是用于排除符合表达式的设备，比如`@media not print and （max-width:1200px）`表示排除宽度小于等于1200px的打印设备; |
+| only | 用来指定某种特定的媒体类型，可以用来排除不支持媒体查询的浏览器。 其实only很多时候是用来对那些不支持Media Query但却支持Media Type的设备隐藏样式表的。 其主要有：支持媒体特性（Media Queries）的设备，正常调用样式，此时就当only不存在；对于不支持媒体特性(Media Queries)但又支持媒体类型(Media Type)的设备，就会忽略样式，因为其先读only而不是screen；另外不支持Media Queries的浏览器，不论是否支持only，样式都不会被采用； |
+| all  | all：所有设备，如果在Media Query 中没有明确指定Media Tpe，那么其默认值就为all; |
 
-> tips：对于支持 Media Queries 的移动设备来说，如果存在 only 关键字，移动设备的 Web 浏览器会忽略 only关键字并直接根据后面的表达式应用样式文件。对于不支持 Media Queries 的设备但能够读取 Media Type 类型的 Web浏览器，遇到 only 关键字时会忽略这个样式文件。
-
-## IV.  media type
+## d.  media type
 
 | 值      | 描述              |
 | ------ | --------------- |
@@ -69,7 +70,7 @@ CSS3 的多媒体查询继承了 CSS2 多媒体类型的所有思想： 取代�
 | screen | 用于电脑屏幕，平板，智能手机登 |
 | speech | 用于屏幕阅读器         |
 
-## V. media feature
+## e. media feature
 
 | 值                       | 描述                                       |
 | ----------------------- | ---------------------------------------- |
@@ -107,27 +108,53 @@ CSS3 的多媒体查询继承了 CSS2 多媒体类型的所有思想： 取代�
 | scan                    | 定义电视类设备的扫描工序。                            |
 | width                   | 定义输出设备中的页面可见区域宽度。                        |
 
-## VI. 示例
+## f. 示例
 
 ```css
 // 1、当设备屏幕小于1180px时会采用该样式
 @media screen and (max-width:1180px) { css codes }
 
-// 2、当设备屏幕大于850px时会采用该样式
+/* 2、当设备屏幕大于850px时会采用该样式 */
 @media screen and (min-width:850px) {  css codes }
 
-// 3、当设备屏幕大于850px,小于1180px时会采用该样式
+/* 3、当设备屏幕大于850px,小于1180px时会采用该样式 */
 @media screen and (max-width:850px) and (min-width:1180px) {  css codes }
 
-// 4、仅当电脑、手机、平板设备屏幕小于1180px时会采用该样式
+/* 4、仅当电脑、手机、平板设备屏幕小于1180px时会采用该样式 */
 @media only screen and (max-width:1180px) { css codes }
+
+/* 5、设备屏幕的输出宽度Device width,下面的代码指的是iPhone.css样式适用于最大设备宽度为480px，比如说iPhone上的显示，这里的max-device-width所指的是设备的实际分辨率，也就是指可视面积分辨率 */
+<link rel="stylesheet" media="screen and (max-device-width:480px)" href="iPhone.css" type="text/css">
+
+/* 6、专门针对iphone4的移动设备 */
+<link rel="stylesheet" media="only screen and (-webkit-min-device-pixel-ratio:2)" type="text/css" href="iPhone4.css">
+
+/* 7、iPad，在大数情况下，移动设备iPad上的Safari和在iPhone上的是相同的，只是他们不同之处是iPad声明了不同的方向，比如说 下面的例子，在纵向(portrait)时采用portrait.css来渲染页面；在横向（landscape）时采用landscape.css来渲 染页面。*/
+
+<link rel="stylesheet" media="all and (orientation:portrait)" href="portrait.css" type="text/css"> 
+
+<link rel="stylesheet" media="all and (orientation:landscape)" href="landscape.css" type="text/css">
+
+/*Android，我们可以使用media query为android手机在不同分辨率提供特定样式，这样就可以解决屏幕分辨率的不同给android手机的页面重构问题。*/
+
+/*a、240px的宽度*/
+<link rel="stylesheet" media="only screen and (max-device-width:240px)" href="android240.css" type="text/css" />
+
+/*b、360px的宽度*/
+<link rel="stylesheet" media="only screen and (min-device-width:241px) and (max-device-width:360px)" href="android360.css" type="text/css" />
+
+/*c、480px的宽度*/
+<link rel="stylesheet" media="only screen and (min-device-width:361px) and (max-device-width:480px)" href="android480.css" type="text/css" />
+
+
+
 ```
 
 
 
-# 5. @media 注意事项
+# 5. 注意事项
 
-有的时候你会发现一个奇怪的问题，就是你的@media没有起作用。我们知道`min-width`表示最小即大于等于（`>=`），`max-width`表示最大即小于等于（`<=`），代码从上往下依次执行，后面重复代码会覆盖之前的代码。正确的适配顺序如下：
+  有的时候你会发现一个奇怪的问题，就是你的@media没有起作用。我们知道`min-width`表示最小即大于等于（`>=`），`max-width`表示最大即小于等于（`<=`），代码从上往下依次执行，后面重复代码会覆盖之前的代码。正确的适配顺序如下：
 
 
 
@@ -139,43 +166,42 @@ CSS3 的多媒体查询继承了 CSS2 多媒体类型的所有思想： 取代�
 
 # 6. 横排竖屏判断
 
-## I. 用CSS判断横竖屏
+## a. 用CSS判断横竖屏
 
 ```css
-/*横屏*/
-@media (orientation:portrait) {} 
+@media screen and (orientation:portrait) {}  /*竖屏*/
+@media screen and (orientation:landscape) {} /*竖屏*/
 
-/*竖屏*/
-@media (orientation:landscape) {}
-
-/*横屏*/
-<link rel="stylesheet" media="all and (orientation:portrait)" href="portrait.css">
-
-/*竖屏*/
-<link rel="stylesheet" media="all and (orientation:landscape)" href="landscape.css">
+<link rel="stylesheet" media="all and (orientation:portrait)" href="portrait.css"> /*竖屏*/
+<link rel="stylesheet" media="all and (orientation:landscape)" href="landscape.css"> /*竖屏*/
 ```
 
-## II. 用JavaScript判断横竖屏
+## b. 用JavaScript判断横竖屏
 
 ```javascript
-// 判断手机横竖屏状态
-function judgeOrientation() {
-  if(window.orientation==180||window.orientation==0) {
-    alert('竖屏状态')
-  }
-  if(window.orientation==90||window.orientation==-90) {
-    alert('横屏状态')
-  }
-}
-
-window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", judgeOrientation, false);
-
-// 移动端的浏览器一般都支持window.orientation这个参数，通过这个参数可以判断出手机是处在横屏还是竖屏状态。
-
-// 从而根据实际需求而执行相应的程序。通过添加监听事件onorientationchange，进行执行就可以了。
+//判断手机横竖屏状态：
+window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function() {
+        if (window.orientation === 180 || window.orientation === 0) {
+            alert('竖屏状态！');
+        }
+        if (window.orientation === 90 || window.orientation === -90 ){
+            alert('横屏状态！');
+        } 
+    }, false);
+//移动端的浏览器一般都支持window.orientation这个参数，通过这个参数可以判断出手机是处在横屏还是竖屏状态。
 ```
 
-## III. 用@media判断横竖屏
+- 屏幕方向对应的window.orientation值：
+
+  > ipad, iphone：90或-90 横屏
+  >
+  > ipad, iphone：0或180  竖屏
+  >
+  > Andriod：0或180  横屏
+  >
+  > Andriod：90或-90 竖屏
+
+## c. 用media判断横竖屏
 
 ```css
 /*竖屏*/
