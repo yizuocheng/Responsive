@@ -148,7 +148,7 @@
 @media screen and (min-width:850px) {  css codes }
 
 /* 3、当设备屏幕大于850px,小于1180px时会采用该样式 */
-@media screen and (max-width:850px) and (min-width:1180px) {  css codes }
+@media screen and (min-width:850px) and (max-width:1180px) {  css codes }
 
 /* 4、仅当电脑、手机、平板设备屏幕小于1180px时会采用该样式 */
 @media only screen and (max-width:1180px) { css codes }
@@ -175,7 +175,6 @@
 
 /*c、480px的宽度*/
 <link rel="stylesheet" media="only screen and (min-device-width:361px) and (max-device-width:480px)" href="android480.css" type="text/css" />
-
 
 
 ```
